@@ -1,3 +1,16 @@
+<template>
+  <div class="favorite-view pb-16">
+    <section>
+      <ul class="favorite-view__movie-list">
+        <MovieItem v-for="movie in mockData" :key="movie.imdbId" :movie="movie" />
+      </ul>
+    </section>
+    <section class="text-center">
+      <v-pagination v-model="page" :length="5" :total-visible="7"></v-pagination>
+    </section>
+  </div>
+</template>
+
 <script setup lang="ts">
 import MovieItem from '@/components/MovieItem.vue'
 import type { Movie } from '@/types/movie.type'
@@ -58,35 +71,11 @@ const mockData: Movie[] = [
   },
 ]
 
-const page: Ref<number> = ref(1)
+const page: Ref<number> = ref(2)
 </script>
 
-<template>
-  <div class="home-view pb-16">
-    <section class="home-view__section home-view__search">
-      <v-text-field
-        prepend-inner-icon="mdi-magnify"
-        density="comfortable"
-        variant="solo"
-        placeholder="Search by Title"
-        hide-details
-        min-width="300px"
-        single-line
-      ></v-text-field>
-    </section>
-    <section>
-      <ul class="home-view__movie-list">
-        <MovieItem v-for="movie in mockData" :key="movie.imdbId" :movie="movie" />
-      </ul>
-    </section>
-    <section class="text-center">
-      <v-pagination v-model="page" :length="15" :total-visible="7"></v-pagination>
-    </section>
-  </div>
-</template>
-
 <style scoped lang="scss">
-.home-view {
+.favorite-view {
   width: 100%;
   display: flex;
   align-items: center;
@@ -94,7 +83,7 @@ const page: Ref<number> = ref(1)
   gap: 24px;
 }
 
-.home-view__movie-list {
+.favorite-view__movie-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
