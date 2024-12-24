@@ -20,21 +20,27 @@
 </template>
 
 <script setup lang="ts">
+import { useFavorites } from '@/composables/useFavorites'
 import type { Movie } from '@/models/Movie'
 import { computed, ref, type PropType, type ComputedRef, type Ref } from 'vue'
 
-defineProps({
+const props = defineProps({
   movie: { type: Object as PropType<Movie>, required: true },
 })
 
-const isStared: Ref<boolean> = ref(false)
+const { star, unStar, isStared } = useFavorites()
+
+const stared: Ref<boolean> = ref(isStared(props.movie))
 
 const startIcon: ComputedRef<string> = computed(() =>
-  isStared.value ? 'mdi-star' : 'mdi-star-outline',
+  isStared(props.movie) ? 'mdi-star' : 'mdi-star-outline',
 )
 
 function toggleStar() {
-  isStared.value = !isStared.value
+  stared.value = !stared.value
+
+  if (stared.value) star(props.movie)
+  else unStar(props.movie)
 }
 </script>
 

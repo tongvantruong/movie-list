@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { Layout } from '@/types/router.type'
+import HomeView from '@/views/HomeView.vue'
+import FavoriteView from '@/views/FavoriteView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +9,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue'),
+      component: HomeView,
       meta: {
         layout: Layout.Default,
       },
@@ -15,7 +17,7 @@ const router = createRouter({
     {
       path: '/favorite',
       name: 'favorite',
-      component: () => import('../views/FavoriteView.vue'),
+      component: FavoriteView,
       meta: {
         layout: Layout.Favorite,
       },

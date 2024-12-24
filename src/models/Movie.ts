@@ -10,4 +10,10 @@ export class Movie {
   public static fromJson(json: MovieResponse): Movie {
     return new Movie(json.Title, json.Year, json.imdbID)
   }
+
+  public isEqual(another: Movie): boolean {
+    return (
+      this.title === another.title && this.year === another.year && this.imdbId === another.imdbId
+    )
+  }
 }

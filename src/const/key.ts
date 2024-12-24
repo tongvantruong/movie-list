@@ -1,0 +1,3 @@
+export const LOCAL_KEY_FAVORITES = 'LOCAL_KEY_FAVORITES' as const
+export const SESSION_KEY_SEARCH_DATA = 'SESSION_KEY_SEARCH_DATA' as const
+export const SESSION_KEY_CACHE = 'SESSION_KEY_CACHE' as const

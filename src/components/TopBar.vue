@@ -2,7 +2,7 @@
   <header class="top-bar">
     <nav class="top-bar__nav">
       <v-card>
-        <v-tabs v-model="tab" align-tabs="center" color="blue-darken-4 cursor-pointer">
+        <v-tabs align-tabs="center" color="blue-darken-4 cursor-pointer">
           <v-tab :value="1" to="/">Movies</v-tab>
           <v-tab :value="2" to="/favorite">Favorites</v-tab>
         </v-tabs>
@@ -11,11 +11,7 @@
   </header>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const tab = ref()
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 .top-bar {

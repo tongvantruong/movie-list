@@ -2,7 +2,11 @@
   <div class="default-layout">
     <TopBar class="default-layout__top-bar" />
     <main class="default-layout__main">
-      <RouterView />
+      <router-view v-slot="{ Component }">
+        <KeepAlive>
+          <component :is="Component" />
+        </KeepAlive>
+      </router-view>
     </main>
   </div>
 </template>

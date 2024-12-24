@@ -6,9 +6,11 @@ import LoadingIcon from '@/components/LoadingIcon.vue'
 import NoMovie from '@/components/NoMovie.vue'
 import { DEFAULT_START_PAGE } from '@/const/api'
 import { useMovies } from '@/composables/useMovies'
+import { useSearchData } from '@/composables/useSearchData'
 
-const page: Ref<number> = ref(DEFAULT_START_PAGE)
-const searchedText: Ref<string> = ref('')
+const { searchedText: sessionSearchedText, page: sessionPage } = useSearchData()
+const page: Ref<number> = ref(sessionPage || DEFAULT_START_PAGE)
+const searchedText: Ref<string> = ref(sessionSearchedText || '')
 const { isLoading, moviesPerPage } = useMovies(searchedText, page)
 
 function onInputChange() {
@@ -19,6 +21,7 @@ function onInputChange() {
 
 <template>
   <div class="home-view pb-16">
+    <input type="text" />
     <section class="home-view__section home-view__search">
       <v-text-field
         prepend-inner-icon="mdi-magnify"
