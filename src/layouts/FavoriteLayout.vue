@@ -13,19 +13,16 @@ import TopBar from '@/components/TopBar.vue'
 
 <style lang="scss">
 .favorite-layout {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
-  width: 100%;
-  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
 }
 
 .favorite-layout__top-bar {
-  grid-column: 1 / 3;
+  display: flex;
 }
 
 .favorite-layout__main {
-  grid-column: 2;
-  grid-row: 2;
+  display: flex;
+  padding: 24px;
 }
 </style>

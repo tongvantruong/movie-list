@@ -2,11 +2,11 @@
 import MovieItem from '@/components/MovieItem.vue'
 import { ref, type Ref } from 'vue'
 import LoadingIcon from '@/components/LoadingIcon.vue'
-
 import NoMovie from '@/components/NoMovie.vue'
-import { DEFAULT_START_PAGE } from '@/const/api'
+import { DEFAULT_START_PAGE } from '@/const/pagination'
 import { useMovies } from '@/composables/useMovies'
 import { useSearchData } from '@/composables/useSearchData'
+import SearchInput from '@/components/SearchInput.vue'
 
 const { searchedText: sessionSearchedText, page: sessionPage } = useSearchData()
 const page: Ref<number> = ref(sessionPage || DEFAULT_START_PAGE)
@@ -21,28 +21,18 @@ function onInputChange() {
 
 <template>
   <div class="home-view pb-16">
-    <input type="text" />
     <section class="home-view__section home-view__search">
-      <v-text-field
-        prepend-inner-icon="mdi-magnify"
-        density="comfortable"
-        variant="solo"
-        placeholder="Search by Title"
-        hide-details
-        min-width="300px"
-        single-line
-        @input="onInputChange"
-        v-model="searchedText"
-      ></v-text-field>
+      <SearchInput @input="onInputChange" v-model="searchedText" />
     </section>
-    <section class="text-center" v-if="moviesPerPage && moviesPerPage?.total > 0">
+    <section class="text-center" v-if="moviesPerPage && moviesPerPage?.totalPages > 1">
       <v-pagination
         v-model="page"
         :length="moviesPerPage.totalPages"
         :total-visible="6"
         :show-first-last-page="true"
+        :disabled="isLoading"
         rounded="circle"
-      ></v-pagination>
+      />
     </section>
     <section>
       <LoadingIcon v-if="isLoading">
@@ -76,5 +66,6 @@ function onInputChange() {
   flex-direction: column;
   gap: 16px;
   max-width: 600px;
+  min-width: 400px;
 }
 </style>

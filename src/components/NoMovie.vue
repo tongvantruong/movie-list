@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="pa-4">
     <slot>
-      <p class="pa-4">No movie found</p>
+      <p>No movie found</p>
     </slot>
   </div>
 </template>

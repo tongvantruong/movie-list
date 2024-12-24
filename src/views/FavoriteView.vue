@@ -1,29 +1,59 @@
+<script setup lang="ts">
+import MovieItem from '@/components/MovieItem.vue'
+import SearchInput from '@/components/SearchInput.vue'
+import { Movie } from '@/models/Movie'
+import { useFavorites } from '@/composables/useFavorites'
+import { ref, type Ref, watch, computed, type ComputedRef } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
+import { DEFAULT_START_PAGE, PER_PAGE } from '@/const/pagination'
+import NoMovie from '@/components/NoMovie.vue'
+
+const searchedText: Ref<string> = ref('')
+const page: Ref<number> = ref(DEFAULT_START_PAGE)
+
+const { staredMoviesRef } = useFavorites()
+const moviesToShow: Ref<Movie[]> = ref(staredMoviesRef.value)
+
+const totalPages: ComputedRef<number> = computed(() => Math.ceil(moviesToShow.value.length / 10))
+
+watch([searchedText, staredMoviesRef], () => {
+  debouncedOnSearch()
+})
+
+function onSearch() {
+  page.value = DEFAULT_START_PAGE
+  moviesToShow.value = staredMoviesRef.value.filter((it) => it.title.includes(searchedText.value))
+}
+
+const debouncedOnSearch = useDebounceFn(onSearch, 100)
+</script>
+
 <template>
   <div class="favorite-view pb-16">
     <section>
-      <ul class="favorite-view__movie-list">
+      <SearchInput v-model="searchedText" />
+    </section>
+    <section v-if="totalPages > 1" class="text-center">
+      <v-pagination
+        v-model="page"
+        :length="totalPages"
+        :total-visible="6"
+        :show-first-last-page="true"
+        rounded="circle"
+      ></v-pagination>
+    </section>
+    <section>
+      <NoMovie v-if="moviesToShow.length <= 0">No favorite movie found</NoMovie>
+      <ul v-else class="favorite-view__movie-list">
         <MovieItem
-          v-for="movie in staredMoviesRef"
+          v-for="movie in moviesToShow.slice((page - 1) * PER_PAGE, page * PER_PAGE)"
           :key="`${movie.imdbId}-${movie.year}`"
           :movie="movie"
         />
       </ul>
     </section>
-    <section class="text-center">
-      <v-pagination v-model="page" :length="5" :total-visible="7"></v-pagination>
-    </section>
   </div>
 </template>
-
-<script setup lang="ts">
-import MovieItem from '@/components/MovieItem.vue'
-import { useFavorites } from '@/composables/useFavorites'
-import { ref, type Ref } from 'vue'
-
-const page: Ref<number> = ref(2)
-
-const { staredMoviesRef } = useFavorites()
-</script>
 
 <style scoped lang="scss">
 .favorite-view {
@@ -39,5 +69,6 @@ const { staredMoviesRef } = useFavorites()
   flex-direction: column;
   gap: 16px;
   max-width: 600px;
+  min-width: 400px;
 }
 </style>

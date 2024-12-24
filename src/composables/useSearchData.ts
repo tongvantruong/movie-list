@@ -1,6 +1,6 @@
 import { SESSION_KEY_SEARCH_DATA } from '@/const/key'
 import { StorageSerializers, useSessionStorage } from '@vueuse/core'
-import { DEFAULT_START_PAGE } from '@/const/api'
+import { DEFAULT_START_PAGE } from '@/const/pagination'
 
 type SearchData = {
   searchedText: string

@@ -1,5 +1,5 @@
 <template>
-  <v-card @dblclick="toggleStar" v-ripple>
+  <v-card class="movie-item" @dblclick="toggleStar" v-ripple>
     <template v-slot:title>
       <div class="d-flex justify-space-between ga-2">
         <span class="movie-item__title">{{ movie.title }}</span>
@@ -45,6 +45,10 @@ function toggleStar() {
 </script>
 
 <style lang="scss" scoped>
+.movie-item {
+  width: 100%;
+}
+
 .movie-item__title {
   display: -webkit-box;
   -webkit-line-clamp: 2;
