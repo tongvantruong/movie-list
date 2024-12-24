@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import MovieItem from '@/components/MovieItem.vue'
-import { onMounted, ref } from 'vue'
-import type { Ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import type { Ref, ComputedRef } from 'vue'
 import { ApiMovie } from '@/apis/movies'
 import type { MoviesPerPage } from '@/models/MoviesPerPage'
 import LoadingIcon from '@/components/LoadingIcon.vue'
@@ -17,6 +17,8 @@ const searchedText: Ref<string> = ref('')
 const isLoading: Ref<boolean> = ref(false)
 const moviesPerPage: Ref<MoviesPerPage | undefined> = ref(undefined)
 
+const cachedKey: ComputedRef<CachedKey> = computed(() => `${searchedText.value}-${page.value}`)
+
 onMounted(() => {
   fetchMovies()
 })
@@ -24,19 +26,12 @@ onMounted(() => {
 async function fetchMovies() {
   isLoading.value = true
 
-  const cachedKey = `${searchedText.value}-${page.value}`
-  if (cachedMoviesPerPage.get(cachedKey)) {
-    moviesPerPage.value = cachedMoviesPerPage.get(cachedKey)
-    isLoading.value = false
-    return
-  }
-
   try {
     moviesPerPage.value = await ApiMovie.search(searchedText.value, page.value)
-    cachedMoviesPerPage.set(cachedKey, moviesPerPage.value)
+    cachedMoviesPerPage.set(cachedKey.value, moviesPerPage.value)
   } catch (error: unknown) {
     moviesPerPage.value = undefined
-    cachedMoviesPerPage.delete(cachedKey)
+    cachedMoviesPerPage.delete(cachedKey.value)
     console.log(error)
   } finally {
     isLoading.value = false
@@ -48,11 +43,25 @@ const debouncedFetchMovies = useDebounceFn(fetchMovies, 200)
 function onInputChange() {
   if (isLoading.value) return
   page.value = DEFAULT_START_PAGE
+
+  if (cachedMoviesPerPage.get(cachedKey.value)) {
+    moviesPerPage.value = cachedMoviesPerPage.get(cachedKey.value)
+    isLoading.value = false
+    return
+  }
+
   debouncedFetchMovies()
 }
 
 function onPageChange() {
   if (isLoading.value) return
+
+  if (cachedMoviesPerPage.get(cachedKey.value)) {
+    moviesPerPage.value = cachedMoviesPerPage.get(cachedKey.value)
+    isLoading.value = false
+    return
+  }
+
   debouncedFetchMovies()
 }
 </script>
