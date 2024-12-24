@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import MovieItem from '@/components/MovieItem.vue'
-import type { Movie } from '@/types/movie.type'
+import type { Movie } from '@/models/Movie'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 

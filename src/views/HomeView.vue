@@ -1,64 +1,60 @@
 <script setup lang="ts">
 import MovieItem from '@/components/MovieItem.vue'
-import type { Movie } from '@/types/movie.type'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import type { Ref } from 'vue'
+import { ApiMovie } from '@/apis/movies'
+import type { MoviesPerPage } from '@/models/MoviesPerPage'
+import LoadingIcon from '@/components/LoadingIcon.vue'
+import { useDebounceFn } from '@vueuse/core'
+import NoMovie from '@/components/NoMovie.vue'
+import { DEFAULT_START_PAGE } from '@/const/api'
 
-const mockData: Movie[] = [
-  {
-    title: 'Waterworld',
-    year: 1995,
-    imdbId: 'tt0114898',
-  },
-  {
-    title: 'Waterworld',
-    year: 1995,
-    imdbId: 'tt0189200',
-  },
-  {
-    title: "The Making of 'Waterworld'",
-    year: 1995,
-    imdbId: 'tt2670548',
-  },
-  {
-    title: 'Waterworld 4: History of the Islands',
-    year: 1997,
-    imdbId: 'tt0161077',
-  },
-  {
-    title: 'Waterworld',
-    year: 1997,
-    imdbId: 'tt0455840',
-  },
-  {
-    title: 'Waterworld',
-    year: 1997,
-    imdbId: 'tt0390617',
-  },
-  {
-    title: 'Swordquest: Waterworld',
-    year: 1983,
-    imdbId: 'tt2761086',
-  },
-  {
-    title:
-      'Behind the Scenes of the Most Fascinating Waterworld on Earth: The Great Backwaters, Kerala.',
-    year: 2014,
-    imdbId: 'tt5847056',
-  },
-  {
-    title: "Louise's Waterworld",
-    year: 1997,
-    imdbId: 'tt0298417',
-  },
-  {
-    title: 'Waterworld',
-    year: 2001,
-    imdbId: 'tt0381702',
-  },
-]
+type CachedKey = string
+const cachedMoviesPerPage = new Map<CachedKey, MoviesPerPage>()
 
-const page: Ref<number> = ref(1)
+const page: Ref<number> = ref(DEFAULT_START_PAGE)
+const searchedText: Ref<string> = ref('')
+const isLoading: Ref<boolean> = ref(false)
+const moviesPerPage: Ref<MoviesPerPage | undefined> = ref(undefined)
+
+onMounted(() => {
+  fetchMovies()
+})
+
+async function fetchMovies() {
+  isLoading.value = true
+
+  const cachedKey = `${searchedText.value}-${page.value}`
+  if (cachedMoviesPerPage.get(cachedKey)) {
+    moviesPerPage.value = cachedMoviesPerPage.get(cachedKey)
+    isLoading.value = false
+    return
+  }
+
+  try {
+    moviesPerPage.value = await ApiMovie.search(searchedText.value, page.value)
+    cachedMoviesPerPage.set(cachedKey, moviesPerPage.value)
+  } catch (error: unknown) {
+    moviesPerPage.value = undefined
+    cachedMoviesPerPage.delete(cachedKey)
+    console.log(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const debouncedFetchMovies = useDebounceFn(fetchMovies, 200)
+
+function onInputChange() {
+  if (isLoading.value) return
+  page.value = DEFAULT_START_PAGE
+  debouncedFetchMovies()
+}
+
+function onPageChange() {
+  if (isLoading.value) return
+  debouncedFetchMovies()
+}
 </script>
 
 <template>
@@ -72,15 +68,34 @@ const page: Ref<number> = ref(1)
         hide-details
         min-width="300px"
         single-line
+        v-model="searchedText"
+        @input="onInputChange"
       ></v-text-field>
     </section>
-    <section>
-      <ul class="home-view__movie-list">
-        <MovieItem v-for="movie in mockData" :key="movie.imdbId" :movie="movie" />
-      </ul>
+    <section class="text-center" v-if="moviesPerPage && moviesPerPage?.total > 0">
+      <v-pagination
+        v-model="page"
+        :length="moviesPerPage.totalPages"
+        :total-visible="6"
+        :show-first-last-page="true"
+        rounded="circle"
+        @update:modelValue="onPageChange"
+      ></v-pagination>
     </section>
-    <section class="text-center">
-      <v-pagination v-model="page" :length="15" :total-visible="7"></v-pagination>
+    <section>
+      <LoadingIcon v-if="isLoading">
+        <v-progress-circular indeterminate :size="30"></v-progress-circular>
+      </LoadingIcon>
+      <div v-else>
+        <NoMovie v-if="!moviesPerPage || moviesPerPage?.total <= 0" />
+        <ul v-else class="home-view__movie-list">
+          <MovieItem
+            v-for="movie in moviesPerPage?.data"
+            :key="`${movie.imdbId}-${movie.year}`"
+            :movie="movie"
+          />
+        </ul>
+      </div>
     </section>
   </div>
 </template>

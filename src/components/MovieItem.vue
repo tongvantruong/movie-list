@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Movie } from '@/types/movie.type'
+import type { Movie } from '@/models/Movie'
 import type { PropType, ComputedRef, Ref } from 'vue'
 import { computed, ref } from 'vue'
 
