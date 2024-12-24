@@ -21,8 +21,7 @@
 
 <script setup lang="ts">
 import type { Movie } from '@/models/Movie'
-import type { PropType, ComputedRef, Ref } from 'vue'
-import { computed, ref } from 'vue'
+import { computed, ref, type PropType, type ComputedRef, type Ref } from 'vue'
 
 defineProps({
   movie: { type: Object as PropType<Movie>, required: true },

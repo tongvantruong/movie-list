@@ -1,68 +1,19 @@
 <script setup lang="ts">
 import MovieItem from '@/components/MovieItem.vue'
-import { computed, onMounted, ref } from 'vue'
-import type { Ref, ComputedRef } from 'vue'
-import { ApiMovie } from '@/apis/movies'
-import type { MoviesPerPage } from '@/models/MoviesPerPage'
+import { ref, type Ref } from 'vue'
 import LoadingIcon from '@/components/LoadingIcon.vue'
-import { useDebounceFn } from '@vueuse/core'
+
 import NoMovie from '@/components/NoMovie.vue'
 import { DEFAULT_START_PAGE } from '@/const/api'
-
-type CachedKey = string
-const cachedMoviesPerPage = new Map<CachedKey, MoviesPerPage>()
+import { useMovies } from '@/composables/useMovies'
 
 const page: Ref<number> = ref(DEFAULT_START_PAGE)
 const searchedText: Ref<string> = ref('')
-const isLoading: Ref<boolean> = ref(false)
-const moviesPerPage: Ref<MoviesPerPage | undefined> = ref(undefined)
-
-const cachedKey: ComputedRef<CachedKey> = computed(() => `${searchedText.value}-${page.value}`)
-
-onMounted(() => {
-  fetchMovies()
-})
-
-async function fetchMovies() {
-  isLoading.value = true
-
-  try {
-    moviesPerPage.value = await ApiMovie.search(searchedText.value, page.value)
-    cachedMoviesPerPage.set(cachedKey.value, moviesPerPage.value)
-  } catch (error: unknown) {
-    moviesPerPage.value = undefined
-    cachedMoviesPerPage.delete(cachedKey.value)
-    console.log(error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-const debouncedFetchMovies = useDebounceFn(fetchMovies, 200)
+const { isLoading, moviesPerPage } = useMovies(searchedText, page)
 
 function onInputChange() {
   if (isLoading.value) return
   page.value = DEFAULT_START_PAGE
-
-  if (cachedMoviesPerPage.get(cachedKey.value)) {
-    moviesPerPage.value = cachedMoviesPerPage.get(cachedKey.value)
-    isLoading.value = false
-    return
-  }
-
-  debouncedFetchMovies()
-}
-
-function onPageChange() {
-  if (isLoading.value) return
-
-  if (cachedMoviesPerPage.get(cachedKey.value)) {
-    moviesPerPage.value = cachedMoviesPerPage.get(cachedKey.value)
-    isLoading.value = false
-    return
-  }
-
-  debouncedFetchMovies()
 }
 </script>
 
@@ -77,8 +28,8 @@ function onPageChange() {
         hide-details
         min-width="300px"
         single-line
-        v-model="searchedText"
         @input="onInputChange"
+        v-model="searchedText"
       ></v-text-field>
     </section>
     <section class="text-center" v-if="moviesPerPage && moviesPerPage?.total > 0">
@@ -88,7 +39,6 @@ function onPageChange() {
         :total-visible="6"
         :show-first-last-page="true"
         rounded="circle"
-        @update:modelValue="onPageChange"
       ></v-pagination>
     </section>
     <section>
