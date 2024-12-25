@@ -1,12 +1,23 @@
 <template>
   <v-card class="movie-item" @dblclick="toggleStar" v-ripple>
-    <template v-slot:title>
+    <template #title>
       <div class="d-flex justify-space-between ga-2">
         <span class="movie-item__title">{{ movie.title }}</span>
-        <v-btn color="blue-lighten-2" :icon="startIcon" variant="text" @click="toggleStar"></v-btn>
+        <v-tooltip location="top">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              color="blue-lighten-2"
+              v-bind="props"
+              :icon="iconStar"
+              variant="text"
+              @click="toggleStar"
+            />
+          </template>
+          <span v-html="tooltipForStarIcon"></span>
+        </v-tooltip>
       </div>
     </template>
-    <template v-slot:subtitle>
+    <template #subtitle>
       <div class="d-flex justify-space-between ga-2">
         <span>
           Year: <i>{{ movie.year }}</i>
@@ -32,9 +43,16 @@ const { star, unStar, isStared } = useFavorites()
 
 const stared: Ref<boolean> = ref(isStared(props.movie))
 
-const startIcon: ComputedRef<string> = computed(() =>
-  isStared(props.movie) ? 'mdi-star' : 'mdi-star-outline',
+const iconStar: ComputedRef<string> = computed(() =>
+  stared.value ? 'mdi-star' : 'mdi-star-outline',
 )
+
+const tooltipForStarIcon: ComputedRef<string> = computed(() => {
+  const action = stared.value ? 'Remove it from' : 'Save it to'
+  return `${action} 'FAVORITES' section. There are several ways:<br/> \
+    - Click on the star icon here<br/> \
+    - Double tap on the Movie item`
+})
 
 function toggleStar() {
   stared.value = !stared.value
