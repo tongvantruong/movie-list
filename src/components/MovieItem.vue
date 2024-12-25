@@ -19,10 +19,10 @@
     </template>
     <template #subtitle>
       <div class="d-flex justify-space-between ga-2">
-        <span>
+        <span test-id="movie-item-year">
           Year: <i>{{ movie.year }}</i>
         </span>
-        <span>
+        <span test-id="movie-item-imdbid">
           IMDb ID: <i>{{ movie.imdbId }}</i>
         </span>
       </div>
@@ -41,7 +41,7 @@ const props = defineProps({
 
 const { star, unStar, isStared } = useFavorites()
 
-const stared: Ref<boolean> = ref(isStared(props.movie))
+const stared: Ref<boolean> = ref(isStared(props.movie.imdbId))
 
 const iconStar: ComputedRef<string> = computed(() =>
   stared.value ? 'mdi-star' : 'mdi-star-outline',
@@ -58,7 +58,7 @@ function toggleStar() {
   stared.value = !stared.value
 
   if (stared.value) star(props.movie)
-  else unStar(props.movie)
+  else unStar(props.movie.imdbId)
 }
 </script>
 
