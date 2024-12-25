@@ -30,4 +30,3 @@ function onClear() {
   emit('clear')
 }
 </script>
-<style scoped lang="scss"></style>

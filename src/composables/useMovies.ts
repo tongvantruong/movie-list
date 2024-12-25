@@ -2,8 +2,8 @@ import { ApiMovie } from '@/apis/movies'
 import type { MoviesPerPage } from '@/models/MoviesPerPage'
 import { useDebounceFn } from '@vueuse/core'
 import { computed, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue'
-import { useSearchData } from './useSearchData'
-import { useCache } from './useCache'
+import { useSearchData } from '@/composables/useSearchData'
+import { useCache } from '@/composables/useCache'
 import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
 
 export function useMovies(searchedText: Ref<string>, page: Ref<number>) {

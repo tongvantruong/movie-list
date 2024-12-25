@@ -1,6 +1,6 @@
 import { API_MOVIES } from '@/const/api'
-import { HttpClient } from '../HttpClient'
-import type { MoviesResponse } from './index.type'
+import { HttpClient } from '@/apis/HttpClient'
+import type { MoviesResponse } from '@/apis/movies/index.type'
 import { MoviesPerPage } from '@/models/MoviesPerPage'
 
 const http = new HttpClient()

@@ -4,12 +4,10 @@
   </footer>
 </template>
 
-<script setup lang="ts"></script>
-
 <style lang="scss">
 .bottom-bar {
   text-align: center;
-  border-top: solid 1px #e6e6e6;
+  border-top: solid 1px $colorBorder;
   background-color: $colorWhite;
   padding: 24px;
   color: $colorSecondary;

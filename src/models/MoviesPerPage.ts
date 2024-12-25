@@ -1,4 +1,4 @@
-import { Movie } from './Movie'
+import { Movie } from '@/models/Movie'
 import type { MoviesResponse } from '@/apis/movies/index.type'
 
 export class MoviesPerPage {

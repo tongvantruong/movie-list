@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-icon__list">
+  <div class="loading-skeleton">
     <slot>
       <VCard :key="index" v-for="(_, index) in new Array(size)">
         <template #title>
@@ -17,7 +17,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.loading-icon__list {
+.loading-skeleton {
   display: flex;
   flex-direction: column;
   gap: 20px;

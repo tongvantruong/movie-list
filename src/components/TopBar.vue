@@ -8,7 +8,7 @@
 
 <style lang="scss">
 .top-bar {
-  border-bottom: solid 1px #e6e6e6;
+  border-bottom: solid 1px $colorBorder;
   background-color: $colorWhite;
   display: flex;
   justify-content: center;

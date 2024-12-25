@@ -8,16 +8,17 @@
         :color="Colors.Primary"
         :slider-color="Colors.Primary"
       >
-        <VTab class="side-bar__text" :value="1" to="/movies" prepend-icon="mdi-filmstrip"
-          >Movies</VTab
-        >
+        <VTab class="side-bar__text" :value="1" to="/movies" prepend-icon="mdi-filmstrip">
+          Movies
+        </VTab>
         <VTab
           class="side-bar__text"
           :value="2"
           to="/favorites"
           prepend-icon="mdi-movie-star-outline"
-          >Favorites</VTab
         >
+          Favorites
+        </VTab>
       </VTabs>
     </nav>
   </header>
@@ -25,13 +26,13 @@
 
 <script setup lang="ts">
 import { Colors } from '@/const/colors'
-import SiteLogo from './SiteLogo.vue'
+import SiteLogo from '@/components/SiteLogo.vue'
 import { RouterLink } from 'vue-router'
 </script>
 
 <style lang="scss">
 .side-bar {
-  border-right: solid 1px #e6e6e6;
+  border-right: solid 1px $colorBorder;
   background-color: $colorWhite;
 }
 
