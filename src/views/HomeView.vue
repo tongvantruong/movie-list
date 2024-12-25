@@ -12,12 +12,12 @@ const props = defineProps({
   searchedText: { type: String, default: '' },
 })
 
-const { searchDataRef } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
-const page: Ref<number> = ref(searchDataRef.value.page || DEFAULT_START_PAGE)
+const { page: sessionPage } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
+const page: Ref<number> = ref(sessionPage.value || DEFAULT_START_PAGE)
 const { isLoading, moviesPerPage } = useMovies(toRef(props, 'searchedText', ''), page)
 
-watch(searchDataRef, () => {
-  page.value = searchDataRef.value.page
+watch(sessionPage, () => {
+  page.value = sessionPage.value
 })
 </script>
 

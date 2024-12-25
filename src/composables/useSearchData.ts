@@ -1,5 +1,6 @@
-import { StorageSerializers, useSessionStorage } from '@vueuse/core'
+import { StorageSerializers, useSessionStorage, type RemovableRef } from '@vueuse/core'
 import { DEFAULT_START_PAGE } from '@/const/pagination'
+import { computed, type ComputedRef } from 'vue'
 
 type SearchData = {
   searchedText: string
@@ -12,21 +13,22 @@ const defaultData: SearchData = {
 }
 
 export function useSearchData(storageKey: string) {
-  const storage = useSessionStorage<SearchData>(storageKey, defaultData, {
+  const storage: RemovableRef<SearchData> = useSessionStorage(storageKey, defaultData, {
     serializer: StorageSerializers.object,
   })
 
-  function setData(data: Partial<SearchData>) {
+  function setSearchData(data: Partial<SearchData>) {
     storage.value = {
       ...storage.value,
       ...data,
     }
   }
 
+  const page: ComputedRef<number> = computed(() => storage.value.page)
+
   return {
-    setData,
+    setSearchData,
     searchedText: storage.value.searchedText,
-    page: storage.value.page,
-    searchDataRef: storage,
+    page,
   }
 }

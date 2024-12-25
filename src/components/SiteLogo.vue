@@ -5,8 +5,6 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
-
 <style lang="scss">
 .site-logo {
   display: flex;

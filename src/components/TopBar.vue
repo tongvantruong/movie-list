@@ -4,8 +4,6 @@
   </header>
 </template>
 
-<script setup lang="ts"></script>
-
 <style lang="scss">
 .top-bar {
   border-bottom: solid 1px $colorBorder;

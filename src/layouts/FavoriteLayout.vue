@@ -30,14 +30,14 @@ import { DEFAULT_START_PAGE } from '@/const/pagination'
 import { SESSION_KEY_SEARCH_DATA_FAVORITES } from '@/const/key'
 import { type Ref, ref } from 'vue'
 
-const { setData, searchedText: searchedTextInSession } = useSearchData(
+const { setSearchData, searchedText: searchedTextInSession } = useSearchData(
   SESSION_KEY_SEARCH_DATA_FAVORITES,
 )
 
 const searchedText: Ref<string> = ref(searchedTextInSession || '')
 
 function resetPage() {
-  setData({ page: DEFAULT_START_PAGE })
+  setSearchData({ page: DEFAULT_START_PAGE })
 }
 </script>
 
