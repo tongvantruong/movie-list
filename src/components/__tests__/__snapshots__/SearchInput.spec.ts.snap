@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SearchInput > should match snapshot 1`] = `
+"<div>
+  <div class="v-input v-input--horizontal v-input--center-affix v-input--density-comfortable v-theme--light v-locale--is-ltr v-input--dirty v-text-field" style="min-width: 300px;">
+    <!---->
+    <div class="v-input__control">
+      <div class="v-field v-field--active v-field--appended v-field--center-affix v-field--dirty v-field--prepended v-field--single-line v-field--no-label v-field--variant-solo v-theme--light v-field--rounded v-locale--is-ltr">
+        <div class="v-field__overlay"></div>
+        <div class="v-field__loader">
+          <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+            <!---->
+            <div class="v-progress-linear__background"></div>
+            <div class="v-progress-linear__buffer" style="width: 0%;"></div>
+            <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+              <div class="v-progress-linear__indeterminate">
+                <div class="v-progress-linear__indeterminate long"></div>
+                <div class="v-progress-linear__indeterminate short"></div>
+              </div>
+            </transition-stub>
+            <!---->
+          </div>
+        </div>
+        <div class="v-field__prepend-inner"><i class="mdi-magnify mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i>
+          <!---->
+        </div>
+        <div class="v-field__field" data-no-activator="">
+          <!---->
+          <!---->
+          <!----><input placeholder="Search by Title" size="1" type="text" id="input-0" aria-describedby="input-0-messages" test-id="search-input" class="v-field__input" value="first value">
+          <!---->
+        </div>
+        <transition-stub name="expand-x-transition" appear="false" persisted="false" css="true">
+          <div class="v-field__clearable"><i class="mdi-close-circle mdi v-icon notranslate v-theme--light v-icon--size-default v-icon--clickable" role="button" aria-hidden="false" tabindex="0" aria-label="Clear "></i></div>
+        </transition-stub>
+        <div class="v-field__append-inner">
+          <!---->
+          <!---->
+        </div>
+        <div class="v-field__outline">
+          <!---->
+          <!---->
+        </div>
+      </div>
+    </div>
+    <!---->
+    <!---->
+  </div>
+</div>"
+`;

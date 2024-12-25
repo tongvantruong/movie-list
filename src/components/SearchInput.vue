@@ -1,6 +1,7 @@
 <template>
   <div>
     <VTextField
+      test-id="search-input"
       rounded
       prepend-inner-icon="mdi-magnify"
       density="comfortable"
