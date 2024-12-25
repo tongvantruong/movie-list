@@ -17,12 +17,17 @@ export function useSearchData() {
     serializer: StorageSerializers.object,
   })
 
-  function setData(searchedText: string, page: number) {
+  function setData(data: Partial<SearchData>) {
     storage.value = {
-      searchedText,
-      page,
+      ...storage.value,
+      ...data,
     }
   }
 
-  return { setData, searchedText: storage.value.searchedText, page: storage.value.page }
+  return {
+    setData,
+    searchedText: storage.value.searchedText,
+    page: storage.value.page,
+    searchDataRef: storage,
+  }
 }

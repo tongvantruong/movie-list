@@ -1,12 +1,12 @@
 <template>
-  <v-card class="movie-item" @dblclick="toggleStar" v-ripple>
+  <VCard class="movie-item card-shadow" @dblclick="toggleStar" v-ripple="{ class: 'text-warn' }">
     <template #title>
       <div class="d-flex justify-space-between ga-2">
         <span class="movie-item__title">{{ movie.title }}</span>
-        <v-tooltip location="top">
+        <VTooltip location="bottom">
           <template v-slot:activator="{ props }">
-            <v-btn
-              color="blue-lighten-2"
+            <VBtn
+              class="movie-item__icon"
               v-bind="props"
               :icon="iconStar"
               variant="text"
@@ -14,7 +14,7 @@
             />
           </template>
           <span v-html="tooltipForStarIcon"></span>
-        </v-tooltip>
+        </VTooltip>
       </div>
     </template>
     <template #subtitle>
@@ -27,7 +27,7 @@
         </span>
       </div>
     </template>
-  </v-card>
+  </VCard>
 </template>
 
 <script setup lang="ts">
@@ -65,6 +65,14 @@ function toggleStar() {
 <style lang="scss" scoped>
 .movie-item {
   width: 100%;
+
+  &:hover {
+    background-color: $colorHover;
+  }
+}
+
+.movie-item__icon {
+  color: $colorPrimary;
 }
 
 .movie-item__title {

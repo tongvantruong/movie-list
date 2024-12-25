@@ -16,11 +16,12 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
   const cachedKey: ComputedRef<string> = computed(() => `${searchedText.value}-${page.value}`)
 
   watch(cachedKey, () => {
-    setData(searchedText.value, page.value)
+    setData({ searchedText: searchedText.value, page: page.value })
     if (isLoading.value) return
 
     if (getCache(cachedKey.value)) {
       moviesPerPage.value = getCache(cachedKey.value)
+      scrollToTop()
       return
     }
 
@@ -48,7 +49,12 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
       // TODO: send error to a tracking system such as Sentry
     } finally {
       isLoading.value = false
+      scrollToTop()
     }
+  }
+
+  function scrollToTop() {
+    document.getElementById('main')?.scrollTo(0, 0)
   }
 
   const debouncedFetchMovies = useDebounceFn(fetchMovies, 200)

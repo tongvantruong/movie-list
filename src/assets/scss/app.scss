@@ -1,0 +1,24 @@
+body {
+  background-color: $colorBackground;
+}
+
+.v-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px #0000001a !important;
+}
+
+.text-primary {
+  color: $colorPrimary;
+}
+
+.text-warn {
+  color: $colorWarn;
+}
+
+a {
+  text-decoration: none;
+}
+
+.v-tab {
+  text-transform: none !important;
+}

@@ -1,27 +1,26 @@
 <template>
   <header class="top-bar">
-    <nav class="top-bar__nav">
-      <v-card>
-        <v-tabs align-tabs="center" color="blue-darken-4 cursor-pointer">
-          <v-tab :value="1" to="/">Movies</v-tab>
-          <v-tab :value="2" to="/favorite">Favorites</v-tab>
-        </v-tabs>
-      </v-card>
-    </nav>
+    <SearchInput class="top-bar__search" v-model="model" />
   </header>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { type Ref } from 'vue'
+import SearchInput from '@/components/SearchInput.vue'
+
+const model: Ref<string> = defineModel({ type: String, default: '' })
+</script>
 
 <style lang="scss">
 .top-bar {
-  padding: 24px 16px;
-}
-.top-bar__nav {
-  width: 100%;
+  border-bottom: solid 1px #e6e6e6;
+  background-color: $colorWhite;
   display: flex;
-  gap: 24px;
   justify-content: center;
-  align-items: center;
+  padding: 12px 0px;
+}
+
+.top-bar__search {
+  width: 500px;
 }
 </style>

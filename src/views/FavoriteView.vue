@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import MovieItem from '@/components/MovieItem.vue'
-import SearchInput from '@/components/SearchInput.vue'
 import { Movie } from '@/models/Movie'
 import { useFavorites } from '@/composables/useFavorites'
-import { ref, type Ref, watch, computed, type ComputedRef } from 'vue'
+import { ref, type Ref, watch, computed, type ComputedRef, toRef } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import { DEFAULT_START_PAGE, PER_PAGE } from '@/const/pagination'
 import NoMovie from '@/components/NoMovie.vue'
 
-const searchedText: Ref<string> = ref('')
+const props = defineProps({
+  searchedText: { type: String, default: '' },
+})
+
+const searchedText: Ref<string> = toRef(props, 'searchedText', '')
 const page: Ref<number> = ref(DEFAULT_START_PAGE)
 
 const { staredMoviesRef } = useFavorites()
@@ -30,17 +33,14 @@ const debouncedOnSearch = useDebounceFn(onSearch, 100)
 
 <template>
   <div class="favorite-view pb-16">
-    <section>
-      <SearchInput v-model="searchedText" />
-    </section>
     <section v-if="totalPages > 1" class="text-center">
-      <v-pagination
+      <VPagination
         v-model="page"
         :length="totalPages"
         :total-visible="6"
         :show-first-last-page="true"
         rounded="circle"
-      ></v-pagination>
+      ></VPagination>
     </section>
     <section>
       <NoMovie v-if="moviesToShow.length <= 0">No favorite movie found</NoMovie>
@@ -68,7 +68,6 @@ const debouncedOnSearch = useDebounceFn(onSearch, 100)
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 600px;
-  min-width: 400px;
+  width: 600px;
 }
 </style>

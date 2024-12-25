@@ -1,25 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { Layout } from '@/types/router.type'
-import HomeView from '@/views/HomeView.vue'
-import FavoriteView from '@/views/FavoriteView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      redirect: { name: 'movies' },
+    },
+    {
+      path: '/movies',
+      name: 'movies',
+      component: () => import('@/views/HomeView.vue'),
       meta: {
         layout: Layout.Default,
       },
     },
     {
-      path: '/favorite',
-      name: 'favorite',
-      component: FavoriteView,
+      path: '/favorites',
+      name: 'favorites',
+      component: () => import('@/views/FavoriteView.vue'),
       meta: {
-        layout: Layout.Favorite,
+        layout: Layout.Default,
       },
     },
   ],
