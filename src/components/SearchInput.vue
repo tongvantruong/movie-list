@@ -10,32 +10,24 @@
       min-width="300px"
       single-line
       clearable
-      @input="onInput"
+      @input="emit('input')"
       @click:clear="onClear"
       v-model="model"
     />
   </div>
 </template>
 <script setup lang="ts">
-import { type Ref } from 'vue'
-import { useSearchData } from '@/composables/useSearchData'
-import { DEFAULT_START_PAGE } from '@/const/pagination'
+import { type ModelRef } from 'vue'
 
-const { setData } = useSearchData()
-
-const model: Ref<string> = defineModel({ type: String, default: '' })
+const model: ModelRef<string> = defineModel({ type: String, default: '' })
+const emit = defineEmits<{
+  input: []
+  clear: []
+}>()
 
 function onClear() {
   model.value = ''
-  resetPage()
-}
-
-function onInput() {
-  resetPage()
-}
-
-function resetPage() {
-  setData({ page: DEFAULT_START_PAGE })
+  emit('clear')
 }
 </script>
 <style scoped lang="scss"></style>

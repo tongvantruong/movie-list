@@ -1,4 +1,3 @@
-import { SESSION_KEY_SEARCH_DATA } from '@/const/key'
 import { StorageSerializers, useSessionStorage } from '@vueuse/core'
 import { DEFAULT_START_PAGE } from '@/const/pagination'
 
@@ -12,8 +11,8 @@ const defaultData: SearchData = {
   page: DEFAULT_START_PAGE,
 }
 
-export function useSearchData() {
-  const storage = useSessionStorage<SearchData>(SESSION_KEY_SEARCH_DATA, defaultData, {
+export function useSearchData(storageKey: string) {
+  const storage = useSessionStorage<SearchData>(storageKey, defaultData, {
     serializer: StorageSerializers.object,
   })
 

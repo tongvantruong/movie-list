@@ -21,7 +21,7 @@ const router = createRouter({
       name: 'favorites',
       component: () => import('@/views/FavoriteView.vue'),
       meta: {
-        layout: Layout.Default,
+        layout: Layout.Favorites,
       },
     },
   ],

@@ -9,7 +9,7 @@ const route = useRoute()
 
 const layout = computed(() => {
   switch (route.meta.layout) {
-    case Layout.Favorite:
+    case Layout.Favorites:
       return FavoriteLayout
     default:
       return DefaultLayout

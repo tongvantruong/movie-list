@@ -6,12 +6,13 @@ import NoMovie from '@/components/NoMovie.vue'
 import { DEFAULT_START_PAGE } from '@/const/pagination'
 import { useMovies } from '@/composables/useMovies'
 import { useSearchData } from '@/composables/useSearchData'
+import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
 
 const props = defineProps({
   searchedText: { type: String, default: '' },
 })
 
-const { searchDataRef } = useSearchData()
+const { searchDataRef } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
 const page: Ref<number> = ref(searchDataRef.value.page || DEFAULT_START_PAGE)
 const { isLoading, moviesPerPage } = useMovies(toRef(props, 'searchedText', ''), page)
 

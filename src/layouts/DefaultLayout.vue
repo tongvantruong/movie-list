@@ -1,6 +1,13 @@
 <template>
   <div class="default-layout">
-    <TopBar class="default-layout__top-bar" v-model="searchedText" />
+    <TopBar class="default-layout__top-bar">
+      <SearchInput
+        class="top-bar__search"
+        v-model="searchedText"
+        @input="resetPage"
+        @clear="resetPage"
+      />
+    </TopBar>
     <SideBar class="default-layout__side-bar" />
     <main class="default-layout__main" id="main">
       <RouterView v-slot="{ Component }" :searchedText="searchedText">
@@ -14,13 +21,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { type Ref, ref } from 'vue'
 import BottomBar from '@/components/BottomBar.vue'
 import SideBar from '@/components/SideBar.vue'
 import TopBar from '@/components/TopBar.vue'
 import { RouterView } from 'vue-router'
+import SearchInput from '@/components/SearchInput.vue'
+import { useSearchData } from '@/composables/useSearchData'
+import { DEFAULT_START_PAGE } from '@/const/pagination'
+import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
 
-const searchedText: Ref<string> = ref('')
+const { setData, searchedText: searchedTextInSession } = useSearchData(
+  SESSION_KEY_SEARCH_DATA_DEFAULT,
+)
+
+const searchedText: Ref<string> = ref(searchedTextInSession || '')
+
+function resetPage() {
+  setData({ page: DEFAULT_START_PAGE })
+}
 </script>
 
 <style lang="scss">
@@ -34,7 +53,6 @@ const searchedText: Ref<string> = ref('')
 }
 
 .default-layout__top-bar {
-  display: flex;
   grid-area: header;
 }
 
@@ -44,7 +62,6 @@ const searchedText: Ref<string> = ref('')
 }
 
 .default-layout__main {
-  display: flex;
   padding: 24px;
   overflow: auto;
   grid-area: main;

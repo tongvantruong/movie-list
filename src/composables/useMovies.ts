@@ -4,6 +4,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { computed, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue'
 import { useSearchData } from './useSearchData'
 import { useCache } from './useCache'
+import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
 
 export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
   const { setCache, getCache, deleteCache } = useCache()
@@ -11,7 +12,7 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
   const isLoading: Ref<boolean> = ref(false)
   const moviesPerPage: Ref<MoviesPerPage | undefined> = ref(undefined)
 
-  const { setData } = useSearchData()
+  const { setData } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
 
   const cachedKey: ComputedRef<string> = computed(() => `${searchedText.value}-${page.value}`)
 

@@ -1,15 +1,10 @@
 <template>
   <header class="top-bar">
-    <SearchInput class="top-bar__search" v-model="model" />
+    <div class="top-bar__search"><slot></slot></div>
   </header>
 </template>
 
-<script setup lang="ts">
-import { type Ref } from 'vue'
-import SearchInput from '@/components/SearchInput.vue'
-
-const model: Ref<string> = defineModel({ type: String, default: '' })
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 .top-bar {
