@@ -24,6 +24,14 @@ watch([searchedText, favoriteMovies], () => {
   debouncedOnSearch()
 })
 
+watch(page, () => {
+  scrollToTop()
+})
+
+function scrollToTop() {
+  document.getElementById('main')?.scrollTo(0, 0)
+}
+
 function onSearch() {
   page.value = DEFAULT_START_PAGE
   moviesToShow.value = favoriteMovies.value.filter((it) => it.title.includes(searchedText.value))
@@ -34,15 +42,6 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
 
 <template>
   <div class="favorite-view pb-16">
-    <section v-if="totalPages > 1" class="text-center favorite-view__section">
-      <VPagination
-        v-model="page"
-        :length="totalPages"
-        :total-visible="6"
-        :show-first-last-page="true"
-        rounded="circle"
-      ></VPagination>
-    </section>
     <section class="favorite-view__section">
       <NoMovie v-if="moviesToShow.length <= 0">No favorite movie found</NoMovie>
       <ul v-else class="favorite-view__movie-list">
@@ -52,6 +51,15 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
           :movie="movie"
         />
       </ul>
+    </section>
+    <section v-if="totalPages > 1" class="text-center favorite-view__section">
+      <VPagination
+        v-model="page"
+        :length="totalPages"
+        :total-visible="6"
+        :show-first-last-page="true"
+        rounded="circle"
+      ></VPagination>
     </section>
   </div>
 </template>
