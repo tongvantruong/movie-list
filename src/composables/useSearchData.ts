@@ -17,18 +17,19 @@ export function useSearchData(storageKey: string) {
     serializer: StorageSerializers.object,
   })
 
-  function setSearchData(data: Partial<SearchData>) {
+  function updateSearchData(data: Partial<SearchData>) {
     storage.value = {
       ...storage.value,
       ...data,
     }
   }
 
+  const searchedText: ComputedRef<string> = computed(() => storage.value.searchedText)
   const page: ComputedRef<number> = computed(() => storage.value.page)
 
   return {
-    setSearchData,
-    searchedText: storage.value.searchedText,
+    updateSearchData,
+    searchedText,
     page,
   }
 }

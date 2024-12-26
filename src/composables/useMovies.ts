@@ -12,12 +12,12 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
   const isLoading: Ref<boolean> = ref(false)
   const moviesPerPage: Ref<MoviesPerPage | undefined> = ref(undefined)
 
-  const { setSearchData } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
+  const { updateSearchData } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
 
   const cachedKey: ComputedRef<string> = computed(() => `${searchedText.value}-${page.value}`)
 
   watch(cachedKey, () => {
-    setSearchData({ searchedText: searchedText.value, page: page.value })
+    updateSearchData({ searchedText: searchedText.value, page: page.value })
     if (isLoading.value) return
 
     if (getCache(cachedKey.value)) {

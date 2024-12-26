@@ -32,7 +32,7 @@ describe('SearchInput', () => {
     input.setValue('New Test Value')
     expect(wrapper.emitted().input).toBeTruthy()
     expect(wrapper.emitted().input.length).toBe(1)
-    expect(wrapper.emitted().input[1]).toEqual(undefined)
+    expect(wrapper.emitted().input[1]).toBe(undefined)
   })
   it('should emit "clear" when clicked clear icon', async () => {
     const clearIcon = wrapper.find('.v-field__clearable i')
@@ -40,6 +40,6 @@ describe('SearchInput', () => {
 
     expect(wrapper.emitted().clear).toBeTruthy()
     expect(wrapper.emitted().clear.length).toBe(1)
-    expect(wrapper.emitted().clear[1]).toEqual(undefined)
+    expect(wrapper.emitted().clear[1]).toBe(undefined)
   })
 })

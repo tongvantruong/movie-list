@@ -1,6 +1,5 @@
-import { describe, it, expect, vi, afterEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { useCache } from '@/composables/useCache'
-import { SESSION_KEY_CACHE } from '@/const/key'
 import type { MoviesPerPage } from '@/models/MoviesPerPage'
 
 const moviesPerPageMock: MoviesPerPage = {
@@ -18,7 +17,7 @@ describe('useCache', () => {
   it('should return undefined if not cached', () => {
     const key = 'text-1'
     const { getCache } = useCache()
-    expect(getCache(key)).toEqual(undefined)
+    expect(getCache(key)).toBe(undefined)
   })
   it('should return cached value if cached', () => {
     const key = 'text-1'
@@ -32,6 +31,6 @@ describe('useCache', () => {
     setCache(key, moviesPerPageMock)
     expect(getCache(key)).toEqual(moviesPerPageMock)
     deleteCache(key)
-    expect(getCache(key)).toEqual(undefined)
+    expect(getCache(key)).toBe(undefined)
   })
 })

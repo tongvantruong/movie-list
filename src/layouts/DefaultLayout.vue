@@ -31,14 +31,14 @@ import { useSearchData } from '@/composables/useSearchData'
 import { DEFAULT_START_PAGE } from '@/const/pagination'
 import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
 
-const { setSearchData, searchedText: searchedTextInSession } = useSearchData(
+const { updateSearchData, searchedText: searchedTextInSession } = useSearchData(
   SESSION_KEY_SEARCH_DATA_DEFAULT,
 )
 
-const searchedText: Ref<string> = ref(searchedTextInSession || '')
+const searchedText: Ref<string> = ref(searchedTextInSession.value || '')
 
 function resetPage() {
-  setSearchData({ page: DEFAULT_START_PAGE })
+  updateSearchData({ page: DEFAULT_START_PAGE })
 }
 </script>
 
