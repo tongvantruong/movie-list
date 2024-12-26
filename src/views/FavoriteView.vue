@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import MovieItem from '@/components/MovieItem.vue'
 import { Movie } from '@/models/Movie'
-import { useFavorites } from '@/composables/useFavorites'
 import { ref, type Ref, watch, computed, type ComputedRef, toRef } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import { DEFAULT_START_PAGE, PER_PAGE } from '@/const/pagination'
 import NoMovie from '@/components/NoMovie.vue'
+import { favoriteStore } from '@/stores/favorite'
 
 const props = defineProps({
   searchedText: { type: String, default: '' },
@@ -14,18 +14,18 @@ const props = defineProps({
 const searchedText: Ref<string> = toRef(props, 'searchedText', '')
 const page: Ref<number> = ref(DEFAULT_START_PAGE)
 
-const { staredMoviesRef } = useFavorites()
-const moviesToShow: Ref<Movie[]> = ref(staredMoviesRef.value)
+const { favoriteMovies } = favoriteStore()
+const moviesToShow: Ref<Movie[]> = ref(favoriteMovies.value)
 
 const totalPages: ComputedRef<number> = computed(() => Math.ceil(moviesToShow.value.length / 10))
 
-watch([searchedText, staredMoviesRef], () => {
+watch([searchedText, favoriteMovies], () => {
   debouncedOnSearch()
 })
 
 function onSearch() {
   page.value = DEFAULT_START_PAGE
-  moviesToShow.value = staredMoviesRef.value.filter((it) => it.title.includes(searchedText.value))
+  moviesToShow.value = favoriteMovies.value.filter((it) => it.title.includes(searchedText.value))
 }
 
 const debouncedOnSearch = useDebounceFn(onSearch, 100)

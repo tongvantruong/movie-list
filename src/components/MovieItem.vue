@@ -31,34 +31,34 @@
 </template>
 
 <script setup lang="ts">
-import { useFavorites } from '@/composables/useFavorites'
 import type { Movie } from '@/models/Movie'
+import { favoriteStore } from '@/stores/favorite'
 import { computed, ref, type PropType, type ComputedRef, type Ref } from 'vue'
 
 const props = defineProps({
   movie: { type: Object as PropType<Movie>, required: true },
 })
 
-const { star, unStar, isStared } = useFavorites()
+const { like, unlike, isLiked } = favoriteStore()
 
-const stared: Ref<boolean> = ref(isStared(props.movie.imdbId))
+const isStarred: Ref<boolean> = ref(isLiked(props.movie.imdbId))
 
 const iconStar: ComputedRef<string> = computed(() =>
-  stared.value ? 'mdi-star' : 'mdi-star-outline',
+  isStarred.value ? 'mdi-star' : 'mdi-star-outline',
 )
 
 const tooltipForStarIcon: ComputedRef<string> = computed(() => {
-  const action = stared.value ? 'Remove it from' : 'Save it to'
+  const action = isStarred.value ? 'Remove it from' : 'Save it to'
   return `${action} 'FAVORITES' section. There are several ways:<br/> \
     - Click on the star icon here<br/> \
     - Double tap on the Movie item`
 })
 
 function toggleStar() {
-  stared.value = !stared.value
+  isStarred.value = !isStarred.value
 
-  if (stared.value) star(props.movie)
-  else unStar(props.movie.imdbId)
+  if (isStarred.value) like(props.movie)
+  else unlike(props.movie.imdbId)
 }
 </script>
 

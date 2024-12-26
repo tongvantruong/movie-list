@@ -4,12 +4,12 @@ import { mount, VueWrapper } from '@vue/test-utils'
 import MovieItem from '@/components/MovieItem.vue'
 import { beforeEach } from 'vitest'
 import type { Movie } from '@/models/Movie'
-import * as useFavorites from '@/composables/useFavorites'
+import * as favoriteStore from '@/stores/favorite'
 
 const useFavoritesMock = vi.hoisted(() => ({
-  star: vi.fn(),
-  unStar: vi.fn(),
-  isStared: vi.fn(),
+  like: vi.fn(),
+  unlike: vi.fn(),
+  isLiked: vi.fn(),
 }))
 
 const vuetify = createVuetify()
@@ -58,35 +58,35 @@ describe('MovieItem', () => {
   it('should change stared ref if clicked star icon', async () => {
     const icon = wrapper.find('.movie-item__icon')
     // @ts-expect-error to access stared ref
-    expect(wrapper.vm.stared).toBe(false)
+    expect(wrapper.vm.isStarred).toBe(false)
     await icon.trigger('click')
     // @ts-expect-error to access stared ref
-    expect(wrapper.vm.stared).toBe(true)
+    expect(wrapper.vm.isStarred).toBe(true)
 
     await icon.trigger('click')
     // @ts-expect-error to access stared ref
-    expect(wrapper.vm.stared).toBe(false)
+    expect(wrapper.vm.isStarred).toBe(false)
   })
   it('should call "star" with correct movie', async () => {
     // @ts-expect-error to test
-    vi.spyOn(useFavorites, 'useFavorites').mockReturnValue(useFavoritesMock)
+    vi.spyOn(favoriteStore, 'favoriteStore').mockReturnValue(useFavoritesMock)
     mountComponent()
 
     const icon = wrapper.find('.movie-item__icon')
     await icon.trigger('click')
-    expect(useFavoritesMock.star).toHaveBeenCalledTimes(1)
-    expect(useFavoritesMock.star).toHaveBeenCalledWith(movie)
+    expect(useFavoritesMock.like).toHaveBeenCalledTimes(1)
+    expect(useFavoritesMock.like).toHaveBeenCalledWith(movie)
   })
 
   it('should call "unStar" with correct movie', async () => {
     // @ts-expect-error to test
-    vi.spyOn(useFavorites, 'useFavorites').mockReturnValue(useFavoritesMock)
+    vi.spyOn(favoriteStore, 'favoriteStore').mockReturnValue(useFavoritesMock)
     mountComponent()
 
     const icon = wrapper.find('.movie-item__icon')
     await icon.trigger('click')
     await icon.trigger('click')
-    expect(useFavoritesMock.unStar).toHaveBeenCalledTimes(1)
-    expect(useFavoritesMock.unStar).toHaveBeenCalledWith(movie.imdbId)
+    expect(useFavoritesMock.unlike).toHaveBeenCalledTimes(1)
+    expect(useFavoritesMock.unlike).toHaveBeenCalledWith(movie.imdbId)
   })
 })
