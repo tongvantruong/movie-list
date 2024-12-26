@@ -67,7 +67,7 @@ watch(sessionPage, () => {
 }
 
 .home-view__pagination {
-  overflow: auto;
+  overflow-x: auto;
   display: grid;
 }
 

@@ -82,7 +82,7 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
 }
 
 .favorite-view__pagination {
-  overflow: auto;
+  overflow-x: auto;
   display: grid;
 }
 
