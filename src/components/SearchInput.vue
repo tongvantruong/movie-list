@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="search-input">
     <VTextField
       test-id="search-input"
+      data-cy="search-input"
       rounded
       prepend-inner-icon="mdi-magnify"
       density="comfortable"
       variant="solo"
       placeholder="Search by Title"
       hide-details
-      min-width="300px"
       single-line
       clearable
       @input="emit('input')"
@@ -31,3 +31,9 @@ function onClear() {
   emit('clear')
 }
 </script>
+
+<style scoped lang="scss">
+.search-input {
+  width: 100%;
+}
+</style>

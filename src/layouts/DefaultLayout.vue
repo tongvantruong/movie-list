@@ -1,12 +1,7 @@
 <template>
   <div class="default-layout">
     <TopBar class="default-layout__top-bar">
-      <SearchInput
-        class="top-bar__search"
-        v-model="searchedText"
-        @input="resetPage"
-        @clear="resetPage"
-      />
+      <SearchInput v-model="searchedText" @input="resetPage" @clear="resetPage" />
     </TopBar>
     <SideBar class="default-layout__side-bar" />
     <main class="default-layout__main" id="main">

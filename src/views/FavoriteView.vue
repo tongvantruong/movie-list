@@ -34,7 +34,7 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
 
 <template>
   <div class="favorite-view pb-16">
-    <section v-if="totalPages > 1" class="text-center">
+    <section v-if="totalPages > 1" class="text-center favorite-view__section">
       <VPagination
         v-model="page"
         :length="totalPages"
@@ -43,7 +43,7 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
         rounded="circle"
       ></VPagination>
     </section>
-    <section>
+    <section class="favorite-view__section">
       <NoMovie v-if="moviesToShow.length <= 0">No favorite movie found</NoMovie>
       <ul v-else class="favorite-view__movie-list">
         <MovieItem
@@ -65,10 +65,13 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
   gap: 24px;
 }
 
+.favorite-view__section {
+  width: 100%;
+}
+
 .favorite-view__movie-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 600px;
 }
 </style>

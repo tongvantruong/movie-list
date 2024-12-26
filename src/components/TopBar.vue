@@ -15,5 +15,6 @@
 
 .top-bar__search {
   width: 500px;
+  padding: 0 24px;
 }
 </style>

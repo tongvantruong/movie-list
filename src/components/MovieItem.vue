@@ -7,13 +7,14 @@
           <template v-slot:activator="{ props }">
             <VBtn
               class="movie-item__icon"
+              data-cy="movie-item-icon"
               v-bind="props"
               :icon="iconStar"
               variant="text"
               @click="toggleStar"
             />
           </template>
-          <span v-html="tooltipForStarIcon"></span>
+          <span data-cy="movie-item-tooltip" v-html="tooltipForStarIcon"></span>
         </VTooltip>
       </div>
     </template>

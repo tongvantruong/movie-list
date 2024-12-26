@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-skeleton">
+  <div class="loading-skeleton" data-cy="loading-skeleton">
     <slot>
       <VCard :key="index" v-for="(_, index) in new Array(size)">
         <template #title>

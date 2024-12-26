@@ -23,11 +23,11 @@ watch(sessionPage, () => {
 
 <template>
   <div class="home-view pb-16">
-    <section>
+    <section class="home-view__section">
       <LoadingSkeleton v-if="isLoading" />
       <div v-else>
         <NoMovie v-if="!moviesPerPage || moviesPerPage?.total <= 0" />
-        <ul v-else class="home-view__movie-list">
+        <ul v-else class="home-view__movie-list" data-cy="home-view-movie-list">
           <MovieItem
             v-for="movie in moviesPerPage?.data"
             :key="`${movie.imdbId}-${movie.year}`"
@@ -36,8 +36,12 @@ watch(sessionPage, () => {
         </ul>
       </div>
     </section>
-    <section class="text-center" v-if="moviesPerPage && moviesPerPage?.totalPages > 1">
+    <section
+      class="text-center home-view__section"
+      v-if="moviesPerPage && moviesPerPage?.totalPages > 1"
+    >
       <VPagination
+        data-cy="home-view-pagination"
         v-model="page"
         :length="moviesPerPage.totalPages"
         :total-visible="6"
@@ -58,10 +62,13 @@ watch(sessionPage, () => {
   gap: 24px;
 }
 
+.home-view__section {
+  width: 100%;
+}
+
 .home-view__movie-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 600px;
 }
 </style>

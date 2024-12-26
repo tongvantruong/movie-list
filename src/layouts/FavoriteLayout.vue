@@ -1,12 +1,7 @@
 <template>
   <div class="favorite-layout">
     <TopBar class="favorite-layout__top-bar">
-      <SearchInput
-        class="top-bar__search"
-        v-model="searchedText"
-        @input="resetPage"
-        @clear="resetPage"
-      />
+      <SearchInput v-model="searchedText" @input="resetPage" @clear="resetPage" />
     </TopBar>
     <SideBar class="favorite-layout__side-bar" />
     <main class="favorite-layout__main" id="main">

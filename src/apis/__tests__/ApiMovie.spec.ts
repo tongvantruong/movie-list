@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { describe, it, expect, vi } from 'vitest'
-import { ApiMovie } from '../movies'
+import { ApiMovie } from '@/apis/movies/index'
 import type { MoviesPerPage } from '@/models/MoviesPerPage'
-import type { MoviesResponse } from '../movies/index.type'
+import type { MoviesResponse } from '@/apis/movies/index.type'
 import { API_MOVIES } from '@/const/api'
 import { Movie } from '@/models/Movie'
 
