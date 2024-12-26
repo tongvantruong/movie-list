@@ -7,7 +7,12 @@
       :color="Colors.Primary"
       :slider-color="Colors.Primary"
     >
-      <VTab class="side-bar__text" :value="1" to="/movies" prepend-icon="mdi-filmstrip">
+      <VTab
+        class="side-bar__text pr-xs-0 pr-sm-10 pr-md-16 pr-lg-16"
+        :value="1"
+        to="/movies"
+        prepend-icon="mdi-filmstrip"
+      >
         Movies
       </VTab>
       <VTab class="side-bar__text" :value="2" to="/favorites" prepend-icon="mdi-movie-star-outline">
@@ -38,6 +43,5 @@ import { RouterLink } from 'vue-router'
 
 .side-bar__text {
   cursor: pointer;
-  padding-right: 60px !important;
 }
 </style>

@@ -14,7 +14,7 @@
 }
 
 .top-bar__search {
-  width: 500px;
+  width: 100%;
   padding: 0 24px;
 }
 </style>
