@@ -37,7 +37,7 @@ watch(sessionPage, () => {
       </div>
     </section>
     <section
-      class="text-center home-view__section"
+      class="text-center home-view__section home-view__pagination"
       v-if="moviesPerPage && moviesPerPage?.totalPages > 1"
     >
       <VPagination
@@ -64,6 +64,11 @@ watch(sessionPage, () => {
 
 .home-view__section {
   width: 100%;
+}
+
+.home-view__pagination {
+  overflow: auto;
+  display: grid;
 }
 
 .home-view__movie-list {

@@ -52,7 +52,10 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
         />
       </ul>
     </section>
-    <section v-if="totalPages > 1" class="text-center favorite-view__section">
+    <section
+      v-if="totalPages > 1"
+      class="text-center favorite-view__section favorite-view__pagination"
+    >
       <VPagination
         v-model="page"
         :length="totalPages"
@@ -76,6 +79,11 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
 .favorite-view__section {
   width: 100%;
   text-align: center;
+}
+
+.favorite-view__pagination {
+  overflow: auto;
+  display: grid;
 }
 
 .favorite-view__movie-list {
