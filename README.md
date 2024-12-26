@@ -10,6 +10,13 @@ https://molist.netlify.app
 
 <img width="1387" alt="image" src="https://github.com/user-attachments/assets/c61ac37a-a7e4-4208-8f82-5028739bde50" />
 
+## TODO
+
+- Collapse side bar. Click or hover on it wil expand. Show only icons when collapsed
+- Set timeout for API using Promise.race, e2e test
+- Show retry button when error in Api, e2e test
+- Allow navigate items of the list by usinf key up/down
+
 ## Project Setup
 
 ```sh
