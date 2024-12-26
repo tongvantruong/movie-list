@@ -25,7 +25,7 @@ watch(sessionPage, () => {
   <div class="home-view pb-16">
     <section class="home-view__section">
       <LoadingSkeleton v-if="isLoading" />
-      <div v-else>
+      <div class="text-center" v-else>
         <NoMovie v-if="!moviesPerPage || moviesPerPage?.total <= 0" />
         <ul v-else class="home-view__movie-list" data-cy="home-view-movie-list">
           <MovieItem

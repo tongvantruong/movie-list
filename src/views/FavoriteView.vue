@@ -67,6 +67,7 @@ const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
 
 .favorite-view__section {
   width: 100%;
+  text-align: center;
 }
 
 .favorite-view__movie-list {
