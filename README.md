@@ -1,18 +1,14 @@
-# movie-list
+## Demo
 
-This template should help get you started developing with Vue 3 in Vite.
+https://drive.google.com/file/d/1snCBrp7o23yMgTixvFX-lYZvak1rOQeF
 
-## Recommended IDE Setup
+## Unit Test Result
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+<img width="521" alt="image" src="https://github.com/user-attachments/assets/bdedb17c-1c21-48a1-9381-9b6676fae4b4" />
 
-## Type Support for `.vue` Imports in TS
+## E2E Test Result
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+<img width="1387" alt="image" src="https://github.com/user-attachments/assets/c61ac37a-a7e4-4208-8f82-5028739bde50" />
 
 ## Project Setup
 
