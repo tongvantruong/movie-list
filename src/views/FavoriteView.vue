@@ -6,6 +6,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { DEFAULT_START_PAGE, PER_PAGE } from '@/const/pagination'
 import NoMovie from '@/components/NoMovie.vue'
 import { favoriteStore } from '@/stores/favorite'
+import { DEBOUNCE_WITHOUT_API_TIME } from '@/const/debouce'
 
 const props = defineProps({
   searchedText: { type: String, default: '' },
@@ -28,7 +29,7 @@ function onSearch() {
   moviesToShow.value = favoriteMovies.value.filter((it) => it.title.includes(searchedText.value))
 }
 
-const debouncedOnSearch = useDebounceFn(onSearch, 100)
+const debouncedOnSearch = useDebounceFn(onSearch, DEBOUNCE_WITHOUT_API_TIME)
 </script>
 
 <template>

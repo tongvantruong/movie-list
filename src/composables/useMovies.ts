@@ -5,6 +5,7 @@ import { computed, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue
 import { useSearchData } from '@/composables/useSearchData'
 import { useCache } from '@/composables/useCache'
 import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
+import { DEBOUNCE_API_TIME } from '@/const/debouce'
 
 export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
   const { setCache, getCache, deleteCache } = useCache()
@@ -58,7 +59,7 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
     document.getElementById('main')?.scrollTo(0, 0)
   }
 
-  const debouncedFetchMovies = useDebounceFn(fetchMovies, 200)
+  const debouncedFetchMovies = useDebounceFn(fetchMovies, DEBOUNCE_API_TIME)
 
   return { isLoading, moviesPerPage }
 }
