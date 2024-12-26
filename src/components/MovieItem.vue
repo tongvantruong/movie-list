@@ -83,5 +83,6 @@ function toggleStar() {
   overflow: hidden;
   text-overflow: ellipsis;
   text-wrap: wrap;
+  text-align: start;
 }
 </style>

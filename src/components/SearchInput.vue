@@ -10,6 +10,7 @@
       placeholder="Search by Title"
       hide-details
       single-line
+      max-width="500px"
       clearable
       @input="emit('input')"
       @click:clear="onClear"
@@ -35,5 +36,7 @@ function onClear() {
 <style scoped lang="scss">
 .search-input {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>

@@ -2,7 +2,7 @@
 
 exports[`SearchInput > should match snapshot 1`] = `
 "<div data-v-54e32457="" class="search-input">
-  <div data-v-54e32457="" class="v-input v-input--horizontal v-input--center-affix v-input--density-comfortable v-theme--light v-locale--is-ltr v-input--dirty v-text-field" data-cy="search-input">
+  <div data-v-54e32457="" class="v-input v-input--horizontal v-input--center-affix v-input--density-comfortable v-theme--light v-locale--is-ltr v-input--dirty v-text-field" style="max-width: 500px;" data-cy="search-input">
     <!---->
     <div class="v-input__control">
       <div class="v-field v-field--active v-field--appended v-field--center-affix v-field--dirty v-field--prepended v-field--single-line v-field--no-label v-field--variant-solo v-theme--light v-field--rounded v-locale--is-ltr">
