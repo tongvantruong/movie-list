@@ -1,3 +1,11 @@
+## Unit Test Result
+
+<img width="521" alt="image" src="https://github.com/user-attachments/assets/bdedb17c-1c21-48a1-9381-9b6676fae4b4" />
+
+## E2E Test Result
+
+<img width="1387" alt="image" src="https://github.com/user-attachments/assets/c61ac37a-a7e4-4208-8f82-5028739bde50" />
+
 ## Project Setup
 
 ```sh
