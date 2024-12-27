@@ -15,7 +15,7 @@ export class HttpClient {
     params?: Record<string, unknown>,
     canceller?: AbortController,
   ): Promise<T> {
-    const config: AxiosRequestConfig = { signal: canceller?.signal }
+    const config: AxiosRequestConfig = { signal: canceller?.signal, timeout: 10000 }
     if (params) {
       config.params = params
     }

@@ -217,7 +217,7 @@ describe('Error handling', () => {
     })
     cy.getByDataCy('retry-message').should('not.exist')
   })
-  it.only(
+  it(
     'should show Timeout Error if reached timeout 10 seconds',
     {
       defaultCommandTimeout: 15000,
@@ -225,7 +225,7 @@ describe('Error handling', () => {
     () => {
       cy.delayApiResponse('https://jsonmock.hackerrank.com/api/movies/search*', 12000)
       cy.visit('/')
-      assertErrorMessage('Looks like the server is taking to long to respond.')
+      assertErrorMessage('timeout of 10000ms exceeded')
     },
   )
 })
