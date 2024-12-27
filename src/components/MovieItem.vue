@@ -40,8 +40,6 @@ const { movie } = defineProps({
   movie: { type: Object as PropType<Movie>, required: true },
 })
 
-console.log('CHild')
-
 const { like, unlike, isLiked } = favoriteStore()
 
 const isStarred: Ref<boolean> = ref(isLiked(movie.imdbId))

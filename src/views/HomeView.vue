@@ -2,6 +2,7 @@
 import MovieItem from '@/components/MovieItem.vue'
 import { ref, type Ref, toRef, watch } from 'vue'
 import LoadingSkeleton from '@/components/LoadingSkeleton.vue'
+import RetryMessage from '@/components/RetryMessage.vue'
 import NoMovie from '@/components/NoMovie.vue'
 import { DEFAULT_START_PAGE } from '@/const/pagination'
 import { useMovies } from '@/composables/useMovies'
@@ -14,7 +15,7 @@ const props = defineProps({
 
 const { page: sessionPage } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
 const page: Ref<number> = ref(sessionPage.value || DEFAULT_START_PAGE)
-const { isLoading, moviesPerPage } = useMovies(toRef(props, 'searchedText', ''), page)
+const { error, isLoading, moviesPerPage, fetchMovies } = useMovies(toRef(props, 'searchedText', ''), page)
 
 watch(sessionPage, () => {
   page.value = sessionPage.value
@@ -26,7 +27,8 @@ watch(sessionPage, () => {
     <section class="home-view__section">
       <LoadingSkeleton v-if="isLoading" />
       <div class="text-center" v-else>
-        <NoMovie v-if="!moviesPerPage || moviesPerPage?.total <= 0" />
+        <RetryMessage v-if="error" :error="error.message || undefined" @retry="fetchMovies" />
+        <NoMovie v-else-if="!moviesPerPage || moviesPerPage?.total <= 0" />
         <ul v-else class="home-view__movie-list" data-cy="home-view-movie-list">
           <MovieItem
             v-for="movie in moviesPerPage?.data"

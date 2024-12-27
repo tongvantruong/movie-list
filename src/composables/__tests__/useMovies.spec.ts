@@ -6,18 +6,6 @@ import * as useCache from '@/composables/useCache'
 import type { MoviesPerPage } from '@/models/MoviesPerPage'
 import { ApiMovie } from '@/apis/movies/index'
 
-const useDebounceFnMock = vi.hoisted(() => ({
-  useDebounceFn: vi.fn(),
-}))
-
-vi.mock(import('@vueuse/core'), async (importOriginal) => {
-  const actual = await importOriginal()
-  return {
-    ...actual,
-    ...useDebounceFnMock,
-  }
-})
-
 const moviesPerPageMock: MoviesPerPage = {
   page: 1,
   total: 2,
@@ -63,5 +51,15 @@ describe('useMovies', () => {
 
     mount(TestComponent)
     expect(searchSpy).toHaveBeenCalledTimes(0)
+  })
+
+  describe('fetchMovies', () => {
+    it('should call API with correct args when called', () => {
+      const searchSpy = vi.spyOn(ApiMovie, 'search')
+      const { fetchMovies } = useMovies(searchedText, page)
+      fetchMovies()
+      expect(searchSpy).toHaveBeenCalledTimes(1)
+      expect(searchSpy).toHaveBeenCalledWith(searchedText.value, page.value)
+    })
   })
 })

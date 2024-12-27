@@ -151,6 +151,84 @@ describe('cache', () => {
   })
 })
 
+describe('Error handling', () => {
+  it('should show Network Error when cannot fetch the movies because of network error', () => {
+    cy.intercept('https://jsonmock.hackerrank.com/api/movies/search*', {
+      forceNetworkError: true,
+    })
+    cy.visit('/')
+    assertErrorMessage('Network Error')
+  })
+  it('should show "Status 500 error" when cannot fetch the movies because of network error', () => {
+    cy.intercept('https://jsonmock.hackerrank.com/api/movies/search*', {
+      statusCode: 500,
+    })
+    cy.visit('/')
+    assertErrorMessage('Request failed with status code 500')
+  })
+  it('should call API again and not show Retry Message if clicked Retry button successfully', () => {
+    const mockSuccessfulApiBody = {
+      page: 1,
+      per_page: 10,
+      total: 4,
+      total_pages: 1,
+      data: [
+        {
+          Title: '50 Greatest Harry Potter Moments',
+          Year: 2011,
+          imdbID: 'tt2006673',
+        },
+        {
+          Title: 'Jessica Simpson: With You/Sweetest Sin',
+          Year: 2003,
+          imdbID: 'tt2395252',
+        },
+        {
+          Title: 'The Greatest Sin',
+          Year: 1922,
+          imdbID: 'tt4577610',
+        },
+        {
+          Title: 'Sin Testigos',
+          Year: 2015,
+          imdbID: 'tt5577206',
+        },
+      ],
+    }
+
+    cy.intercept('https://jsonmock.hackerrank.com/api/movies/search?Title=&page=1', {
+      statusCode: 404,
+    }).as('apiWithError')
+    cy.visit('/')
+    cy.wait('@apiWithError')
+
+    cy.intercept('https://jsonmock.hackerrank.com/api/movies/search?Title=&page=1', {
+      statusCode: 200,
+      body: mockSuccessfulApiBody,
+    }).as('apiOk')
+
+    cy.getByDataCy('retry-message').find('button').click()
+
+    cy.wait('@apiOk').then(({ request }) => {
+      expect(request.method).to.equal('GET')
+      expect(request.url).to.equal(
+        'https://jsonmock.hackerrank.com/api/movies/search?Title=&page=1',
+      )
+    })
+    cy.getByDataCy('retry-message').should('not.exist')
+  })
+})
+
+function assertErrorMessage(errorMessage: string) {
+  cy.getByDataCy('retry-message').should('contain', 'Something went wrong!')
+  cy.getByDataCy('retry-message').should(
+    'contain',
+    'We could not fetch the movies. Please check and try again!',
+  )
+  cy.getByDataCy('retry-message').should('contain', errorMessage)
+  cy.getByDataCy('retry-message').find('button').should('contain', 'Retry')
+}
+
 function assertMovieFavoriteIcon(itemIndex: number, isLiked: boolean) {
   const expectedIcon = isLiked ? 'mdi-star' : 'mdi-star-outline'
   cy.getByDataCy('movie-item-icon').eq(itemIndex).find('.v-icon').should('have.class', expectedIcon)

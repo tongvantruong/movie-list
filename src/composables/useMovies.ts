@@ -6,11 +6,15 @@ import { useSearchData } from '@/composables/useSearchData'
 import { useCache } from '@/composables/useCache'
 import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
 import { DEBOUNCE_API_TIME } from '@/const/debouce'
+import { AxiosError } from 'axios'
+
+type AppError = Error | AxiosError | null
 
 export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
   const { setCache, getCache, deleteCache } = useCache()
 
   const isLoading: Ref<boolean> = ref(false)
+  const error: Ref<AppError> = ref(null)
   const moviesPerPage: Ref<MoviesPerPage | undefined> = ref(undefined)
 
   const { updateSearchData } = useSearchData(SESSION_KEY_SEARCH_DATA_DEFAULT)
@@ -39,16 +43,17 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
   })
 
   async function fetchMovies() {
+    error.value = null
     isLoading.value = true
 
     try {
       moviesPerPage.value = await ApiMovie.search(searchedText.value, page.value)
+      console.log('xxxxxx')
       setCache(cachedKey.value, moviesPerPage.value)
-    } catch (error: unknown) {
+    } catch (e: unknown) {
       moviesPerPage.value = undefined
       deleteCache(cachedKey.value)
-      console.log(error)
-      // TODO: send error to a tracking system such as Sentry
+      if (e instanceof Error || e instanceof AxiosError) error.value = e
     } finally {
       isLoading.value = false
       scrollToTop()
@@ -61,5 +66,5 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
 
   const debouncedFetchMovies = useDebounceFn(fetchMovies, DEBOUNCE_API_TIME)
 
-  return { isLoading, moviesPerPage }
+  return { error, isLoading, moviesPerPage, fetchMovies }
 }
