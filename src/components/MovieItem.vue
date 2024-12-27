@@ -36,13 +36,15 @@ import type { Movie } from '@/models/Movie'
 import { favoriteStore } from '@/stores/favorite'
 import { computed, ref, type PropType, type ComputedRef, type Ref } from 'vue'
 
-const props = defineProps({
+const { movie } = defineProps({
   movie: { type: Object as PropType<Movie>, required: true },
 })
 
+console.log('CHild')
+
 const { like, unlike, isLiked } = favoriteStore()
 
-const isStarred: Ref<boolean> = ref(isLiked(props.movie.imdbId))
+const isStarred: Ref<boolean> = ref(isLiked(movie.imdbId))
 
 const iconStar: ComputedRef<string> = computed(() =>
   isStarred.value ? 'mdi-star' : 'mdi-star-outline',
@@ -58,8 +60,8 @@ const tooltipForStarIcon: ComputedRef<string> = computed(() => {
 function toggleStar() {
   isStarred.value = !isStarred.value
 
-  if (isStarred.value) like(props.movie)
-  else unlike(props.movie.imdbId)
+  if (isStarred.value) like(movie)
+  else unlike(movie.imdbId)
 }
 </script>
 

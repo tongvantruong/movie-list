@@ -7,7 +7,7 @@
       prepend-inner-icon="mdi-magnify"
       density="comfortable"
       variant="solo"
-      placeholder="Search by Title"
+      placeholder="Search by Title (case sensitive)"
       hide-details
       single-line
       max-width="500px"

@@ -27,7 +27,7 @@ exports[`SearchInput > should match snapshot 1`] = `
         <div class="v-field__field" data-no-activator="">
           <!---->
           <!---->
-          <!----><input placeholder="Search by Title" size="1" type="text" id="input-0" aria-describedby="input-0-messages" test-id="search-input" class="v-field__input" value="first value">
+          <!----><input placeholder="Search by Title (case sensitive)" size="1" type="text" id="input-0" aria-describedby="input-0-messages" test-id="search-input" class="v-field__input" value="first value">
           <!---->
         </div>
         <transition-stub name="expand-x-transition" appear="false" persisted="false" css="true">

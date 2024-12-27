@@ -14,7 +14,7 @@ describe('Searching', () => {
     searchAndWait('History of the Islands')
     assertNumberOfMoviesOnCurrentPage(1)
   })
-  it('should empty message "No movie found" if searched by a weird string', () => {
+  it('should show empty message "No movie found" if searched by a weird string', () => {
     cy.visit('/')
     assertDataIsLoaded()
     typeInSearchInput('@No movie matched this text@')
