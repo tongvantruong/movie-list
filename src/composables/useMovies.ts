@@ -48,7 +48,6 @@ export function useMovies(searchedText: Ref<string>, page: Ref<number>) {
 
     try {
       moviesPerPage.value = await ApiMovie.search(searchedText.value, page.value)
-      console.log('xxxxxx')
       setCache(cachedKey.value, moviesPerPage.value)
     } catch (e: unknown) {
       moviesPerPage.value = undefined
