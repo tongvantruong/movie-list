@@ -159,7 +159,7 @@ describe('Error handling', () => {
     cy.visit('/')
     assertErrorMessage('Network Error')
   })
-  it('should show "Status 500 error" when cannot fetch the movies because of network error', () => {
+  it('should show "Status 500 error" when cannot fetch the movies because of 500 error', () => {
     cy.intercept('https://jsonmock.hackerrank.com/api/movies/search*', {
       statusCode: 500,
     })
