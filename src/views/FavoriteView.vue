@@ -6,7 +6,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { DEFAULT_START_PAGE, PER_PAGE } from '@/const/pagination'
 import NoMovie from '@/components/NoMovie.vue'
 import { favoriteStore } from '@/stores/favorite'
-import { DEBOUNCE_WITHOUT_API_TIME } from '@/const/debouce'
+import { DEBOUNCE_WITHOUT_API_TIME } from '@/const/debounce'
 
 const props = defineProps({
   searchedText: { type: String, default: '' },

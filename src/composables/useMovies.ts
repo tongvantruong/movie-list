@@ -5,7 +5,7 @@ import { computed, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue
 import { useSearchData } from '@/composables/useSearchData'
 import { useCache } from '@/composables/useCache'
 import { SESSION_KEY_SEARCH_DATA_DEFAULT } from '@/const/key'
-import { DEBOUNCE_API_TIME } from '@/const/debouce'
+import { DEBOUNCE_API_TIME } from '@/const/debounce'
 import { AxiosError } from 'axios'
 
 type AppError = Error | AxiosError | null
