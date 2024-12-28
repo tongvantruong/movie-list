@@ -1,11 +1,17 @@
 <template>
-  <VCard class="movie-item card-shadow" @dblclick="toggleStar" v-ripple="{ class: 'text-warn' }">
+  <VCard
+    class="movie-item card-shadow"
+    role="listitem"
+    @dblclick="toggleStar"
+    v-ripple="{ class: 'text-warn' }"
+  >
     <template #title>
       <div class="d-flex justify-space-between ga-2">
         <span class="movie-item__title">{{ movie.title }}</span>
-        <VTooltip location="bottom">
+        <VTooltip location="bottom" role="tooltip" aria-label="favorite">
           <template v-slot:activator="{ props }">
             <VBtn
+              title="Star"
               class="movie-item__icon"
               data-cy="movie-item-icon"
               v-bind="props"
