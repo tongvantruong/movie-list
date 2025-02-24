@@ -11,10 +11,10 @@
   display: flex;
   justify-content: center;
   padding: 12px 0px;
-}
 
-.top-bar__search {
-  width: 100%;
-  padding: 0 24px;
+  &__search {
+    width: 100%;
+    padding: 0 24px;
+  }
 }
 </style>

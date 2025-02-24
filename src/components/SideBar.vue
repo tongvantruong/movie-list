@@ -35,13 +35,13 @@ import { RouterLink } from 'vue-router'
   flex-direction: column;
   border-right: solid 1px $colorBorder;
   background-color: $colorWhite;
-}
 
-.side-bar__logo {
-  padding: 20px 24px 20px 16px;
-}
+  &__logo {
+    padding: 20px 24px 20px 16px;
+  }
 
-.side-bar__text {
-  cursor: pointer;
+  &__text {
+    cursor: pointer;
+  }
 }
 </style>

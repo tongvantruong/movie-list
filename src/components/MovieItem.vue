@@ -41,6 +41,9 @@
 import type { Movie } from '@/models/Movie'
 import { favoriteStore } from '@/stores/favorite'
 import { computed, ref, type PropType, type ComputedRef, type Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const { movie } = defineProps({
   movie: { type: Object as PropType<Movie>, required: true },
@@ -55,10 +58,7 @@ const iconStar: ComputedRef<string> = computed(() =>
 )
 
 const tooltipForStarIcon: ComputedRef<string> = computed(() => {
-  const action = isStarred.value ? 'Remove it from' : 'Save it to'
-  return `${action} 'FAVORITES' section. There are several ways:<br/> \
-    - Click on the star icon here<br/> \
-    - Double tap on the Movie item`
+  return t('favorite_tooltip')
 })
 
 function toggleStar() {
@@ -76,19 +76,19 @@ function toggleStar() {
   &:hover {
     background-color: $colorHover;
   }
-}
 
-.movie-item__icon {
-  color: $colorPrimary;
-}
+  &__icon {
+    color: $colorPrimary;
+  }
 
-.movie-item__title {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-wrap: wrap;
-  text-align: start;
+  &__title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: wrap;
+    text-align: start;
+  }
 }
 </style>
